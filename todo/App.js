@@ -17,6 +17,7 @@ import uuidv1 from "uuid/v1";
 const { height, width } = Dimensions.get("window");
 
 export default class App extends React.Component {
+
   state = {
     newToDo: "",
     loadedToDos: false,
@@ -27,28 +28,30 @@ export default class App extends React.Component {
   };
   render() {
     const { newToDo, loadedToDos, toDos } = this.state;
+    console.log(toDos);
     if (!loadedToDos) {
       return <AppLoading />;
     }
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <Text style={styles.title}>DDona To Do</Text>
+        <Text style={styles.title}>Sun's To Do</Text>
         <View style={styles.card}>
           <TextInput
             style={styles.input}
             placeholder={"New To Do"}
             value={newToDo}
-            onChangeText={this._crontollNewToDo}
-            placeholderTextColor={"#999"}
+            onChangeText={this._crontolNewToDo}
+            placeholderTextColor={"#999"} 
             returnKeyType={"done"}
-            autoCorrect={false}
-            onSubmitEditing={this._addToDo}
-            underlineColorAndroid={"transparent"}
+            autoCorrect={false} 
+            onSubmitEditing={this._addToDo} //추가시done버튼
+            // underlineColorAndroid={"transparent"}
           />
           <ScrollView contentContainerStyle={styles.toDos}>
+          {/* <ToDo text={"Hello! I'am default Todo."}/> */}
             {Object.values(toDos)
-              .reverse()
+              .reverse()   //최신 todo가 맨위로
               .map(toDo => (
                 <ToDo
                   key={toDo.id}
@@ -64,20 +67,23 @@ export default class App extends React.Component {
       </View>
     );
   }
-  _crontollNewToDo = text => {
+  //
+  _crontolNewToDo = text => {
     this.setState({
       newToDo: text
     });
   };
+
   _loadToDos = async () => {
     try {
-      const toDos = await AsyncStorage.getItem("toDos");
+      const toDos = await AsyncStorage.getItem("toDos"); //키값
       const parsedToDos = JSON.parse(toDos);
       this.setState({ loadedToDos: true, toDos: parsedToDos || {} });
     } catch (err) {
       console.log(err);
     }
   };
+
   _addToDo = () => {
     const { newToDo } = this.state;
     if (newToDo !== "") {
@@ -104,6 +110,7 @@ export default class App extends React.Component {
       });
     }
   };
+
   _deleteToDo = id => {
     this.setState(prevState => {
       const toDos = prevState.toDos;
@@ -116,6 +123,7 @@ export default class App extends React.Component {
       return { ...newState };
     });
   };
+
   _uncompleteToDo = id => {
     this.setState(prevState => {
       const newState = {
@@ -132,6 +140,7 @@ export default class App extends React.Component {
       return { ...newState };
     });
   };
+
   _completeToDo = id => {
     this.setState(prevState => {
       const newState = {
@@ -145,6 +154,7 @@ export default class App extends React.Component {
       return { ...newState };
     });
   };
+
   _updateToDo = (id, text) => {
     this.setState(prevState => {
       const newState = {
@@ -158,22 +168,25 @@ export default class App extends React.Component {
       return { ...newState };
     });
   };
+
   _saveToDos = newToDos => {
+    console.log(newToDos)
     const saveToDos = AsyncStorage.setItem("toDos", JSON.stringify(newToDos));
   };
 }
-
+ 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F23657",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent:"center"
   },
   title: {
     color: "white",
     fontSize: 30,
     marginTop: 50,
-    fontWeight: "200",
+    fontWeight: "700",
     marginBottom: 30
   },
   card: {
