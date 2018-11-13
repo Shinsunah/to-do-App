@@ -45,7 +45,7 @@ export default class ToDo extends Component {
 
                     {/* 1 */}
                     <View style={styles.column}>
-                        <TouchableOpacity onPress={this.toggleComplete}>
+                        <TouchableOpacity onPress={this._toggleComplete}>
                             <View
                                 style = {[
                                     styles.circle,
@@ -106,17 +106,13 @@ export default class ToDo extends Component {
 
     }
     _toggleComplete = (event) => {
-        const {isCompleted, uncompleteToDo, completeToDo, id} = this.props;
-        if( isCompleted ){
+        const { isCompleted, uncompleteToDo, completeToDo, id } = this.props;
+        console.log(this.props);
+        if (isCompleted) {
             uncompleteToDo(id);
         } else {
             completeToDo(id);
         }
-        // this.setState(prevState =>{
-        //     return{
-        //         isCompletetd: !prevState.isCompleted
-        //     };
-        // });
     };
     _startEditing = (event)=>{
         this.setState({
@@ -131,7 +127,8 @@ export default class ToDo extends Component {
             isEditing:false
         });
     };
-    _controllInput = text =>{
+    _controlInput = text =>{
+        console.log('here!!!!',text);
         this.setState({ toDoValue:text });
     }
 }

@@ -142,6 +142,7 @@ export default class App extends React.Component {
   };
 
   _completeToDo = id => {
+    console.log('complete hi')
     this.setState(prevState => {
       const newState = {
         ...prevState,
@@ -156,6 +157,7 @@ export default class App extends React.Component {
   };
 
   _updateToDo = (id, text) => {
+    console.log('hihi')
     this.setState(prevState => {
       const newState = {
         ...prevState,
